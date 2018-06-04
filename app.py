@@ -121,7 +121,7 @@ will return one recepie
 '''
 
 
-@app.route('/recipes/<id>')
+@app.route('/recipes/<id>', methods=['GET'])
 def get_one_recipe(id):
     try:
         recipe = Recipe.query.filter_by(id=id).first()
