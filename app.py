@@ -67,11 +67,11 @@ def get_all_recipes():
             recipe_data['difficulty'] = recipe.difficulty
             recipe_data['vegetarian'] = recipe.vegetarian
             rating_length = len(recipe.ratings)
-            print(rating_length)
+            #print(rating_length)
 
             # print(recipe.ratings)
             for rating in recipe.ratings:
-                print(rating.value)
+                #print(rating.value)
                 rating_data.append(rating.value)
                 rating_value = rating_value+rating.value
 
@@ -99,7 +99,7 @@ this route will add one recepie to the database
 def create_recipe():
     try:
         data = request.get_json()
-        print(data)
+        #print(data)
         name = data['name']
         prep_time = data['prep_time']
         difficulty = data['difficulty']
@@ -153,17 +153,18 @@ def update_recipe(id):
         data = request.get_json()
         if not data:
             return jsonify({'message': 'no data provided'}), 404
-        print(data)
+        #print(data)
         recipe = Recipe.query.filter_by(id=id).first()
 
         if 'name' in data:
             recipe.name = data['name']
         if 'prep_time' in data:
-            recipe.prep_time = data['difficulty']
+            recipe.prep_time = data['prep_time']
         if 'difficulty' in data:
             recipe.difficulty = data['difficulty']
         if 'vegetarian' in data:
             recipe.vegetarian = data['vegetarian']
+        
         db.session.commit()
         return jsonify({'message': 'updated'}), 204
     except Exception as e:
@@ -239,7 +240,7 @@ def rate_recipe(id):
         new_rating = Rating(value=value, recipe_id=recipe.id)
         db.session.add(new_rating)
         db.session.commit()
-        print(new_rating)
+        #print(new_rating)
         response = jsonify({'message': 'new recipe created'})
         response.status_code = 500
         return response
